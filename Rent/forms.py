@@ -8,7 +8,13 @@ class CarForm(ModelForm):
     
     class Meta:
         model = Car
-        fields = ['model', 'color', 'patent', 'picture','restriction']
+        fields = ['model', 'color', 'patent', 'picture',]
+        
+class EditCar(ModelForm):
+
+    class Meta:
+        model = Car
+        fields = ['model', 'color', 'patent', 'picture',]
         
 class ExecutiveForm(ModelForm):
     

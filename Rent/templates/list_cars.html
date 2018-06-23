@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+    <title>Listar Autos</title>
+  </head>
+  <body>
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">SafeCar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="navbar-collapse collapse show" id="navbarColor01" style="">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item ">
+              <a class="nav-link" href="index">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Autos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Ejecutivos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Clientes</a>
+            </li>
+          </ul>
+          <form class="form-inline">
+            <button class="btn btn-outline-info my-2 my-sm-0" type="submit"> <a class="nav-link" href="{% url 'cars' %}">Iniciar sesión</a> </button>
+          </form>
+        </div>
+      </nav>
+    <div class="container">        
+            <div class="row">
+            <div class="col-md-2">
+              <h1>Autos</h1>
+            </div>
+            <div class="col-md-2 offset-md-8">
+              <a href="{% url 'car_add' %}"><button type="button" class="btn btn-outline-info my-2 my-">Agregar Auto</button></a>
+            </div>
+          
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                
+
+                <table class="table" id="datos">
+                  <thead>
+                    <tr>
+                      <th scope="col">Modelo</th>
+                      <th scope="col">Color</th>
+                      <th scope="col">Patente</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for car in object_list %}
+                    <tr>
+                      <td>{{car.model}}</td>
+                      <td>{{car.color}}</td>
+                      <td>{{car.patent}}</td>
+                      <td>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Action
+                          </button>
+                          <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            <a href="{% url 'edit_car' car.pk %}">
+                              <button class="dropdown-item" type="button">Editar</button>
+                            </a>
+                            <a href = "{% url 'delete_car' car.pk %}">
+                              <button class="dropdown-item delete" type="button">Eliminar</button>
+                            </a>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    {% endfor %} 
+
+                  </tbody>
+                </table>
+
+
+            </div>
+        </div>
+        <div class="row">
+            {% if object_list.has_next or object_list.has_previous %}
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination">
+                     {% if object_list.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ object_list.previous_page_number }}">Previous</a></li>
+                    {% endif %}
+                    
+                    {% for page in object_list.paginator.page_range %}
+                    <li class="page-item {% if object_list.number == page %}active{% endif %}"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                    {% endfor %}
+
+                     {% if object_list.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ object_list.next_page_number }}">Next</a></li>
+                    {% endif %}
+                  </ul>
+                </nav>
+
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+  </body>
+  <script language="javascript">
+    function doSearch()
+    {
+      var tableReg = document.getElementById('datos');
+      var searchText = document.getElementById('searchTerm').value.toLowerCase();
+      var cellsOfRow="";
+      var found=false;
+      var compareWith="";
+ 
+      // Recorremos todas las filas con contenido de la tabla
+      for (var i = 1; i < tableReg.rows.length; i++)
+      {
+        cellsOfRow = tableReg.rows[i].getElementsByTagName('td');
+        found = false;
+        // Recorremos todas las celdas
+        for (var j = 0; j < cellsOfRow.length && !found; j++)
+        {
+          compareWith = cellsOfRow[j].innerHTML.toLowerCase();
+          // Buscamos el texto en el contenido de la celda
+          if (searchText.length == 0 || (compareWith.indexOf(searchText) > -1))
+          {
+            found = true;
+          }
+        }
+        if(found)
+        {
+          tableReg.rows[i].style.display = '';
+        } else {
+          // si no ha encontrado ninguna coincidencia, esconde la
+          // fila de la tabla
+          tableReg.rows[i].style.display = 'none';
+        }
+      }
+    }
+  </script>
+</html>
+
+

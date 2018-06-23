@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'Rent',
+#    'auth_rent',
+    'autofixture',
+    'bootstrap4'
 ]
 
 MIDDLEWARE = [

@@ -4,10 +4,9 @@ from django.contrib.auth.models import User
 
 class Car(models.Model):
     model = models.CharField(max_length=120)
-    color = models.CharField(max_lenght=100)
+    color = models.CharField(max_length=120)
     picture = models.ImageField(upload_to='car')
-    patent = models.CharField(max_length=6,min_length=6)
-    restriction = models.DateField()
+    patent = models.CharField(max_length=6)
 
     def __str__(self):
         return self.patent

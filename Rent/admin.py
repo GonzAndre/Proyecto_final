@@ -5,7 +5,7 @@ from django.utils.safestring import mark_safe
 
 @admin.register(Car)
 class CarAdmin(admin.ModelAdmin):
-    list_display = ('thumb','patent','model','color','restriction')
+    list_display = ('thumb','patent','model','color')
     
     def thumb(self, obj):
         return mark_safe(u'<img src="%s" style="width:10px;height:10px;"/>' \
