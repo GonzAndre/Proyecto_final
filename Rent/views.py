@@ -65,6 +65,7 @@ def index(request):
         template_name = 'index.html'
         return render(request, template_name, data)
     
+@login_required(login_url='/auth/login')    
 def list_cars(request):
     #si es false el super admin no podra entrar
     if(user_client(request.user,False) and user_executive(request.user,False)):
