@@ -37,15 +37,20 @@ def user_executive(user,executive):
         except Exception as e:
             return False
         
-#Index
+    
 def index(request):
     data = {}
+    data['inicio'] = 0
+    if (user_client(request.user,False)):
+        data['inicio']= 1
+    elif (user_executive(request.user,False)):
+        data['inicio']= 2
+    
     data['name'] = 'Car'
     data["request"] = request
     
     try:
-        cliente = Client.objects.get(user=request.user)
-        object_list = Car.objects().order_by('-id')
+        object_list = Car.objects.all().order_by('-id')
 
         paginator = Paginator(object_list, 10)
         page = request.GET.get('page')
@@ -70,8 +75,9 @@ def index(request):
 @login_required(login_url='/auth/login')
 def list_cars(request):
     #si es false el super admin no podra entrar
-    if(user_client(request.user,False) or user_executive(request.user,False)):
+    if(user_client(request.user,False)):
         return redirect('cars')
+    
     data= {}
     data["request"] = request
     object_list = Car.objects.all().order_by('-id')
@@ -92,7 +98,7 @@ def list_cars(request):
 @login_required(login_url='/auth/login')
 def car_add(request):
     #si es false el super admin no podra entrar
-    if(user_client(request.user,False) or user_executive(request.user,False)):
+    if(user_client(request.user,False)):
         return redirect('cars')
     data = {}
     data["request"] = request
@@ -114,7 +120,7 @@ def car_add(request):
 @login_required(login_url='/auth/login')
 def delete_car(request, id):
     #si es false el super admin no podra entrar
-    if(user_client(request.user,False) or user_executive(request.user,False)):
+    if(user_client(request.user,False)):
         return redirect('cars')
     data = {}
     template_name = 'list_cars.html'
@@ -125,7 +131,7 @@ def delete_car(request, id):
 @login_required(login_url='/auth/login')
 def edit_car(request, car_id):
     #si es false el super admin no podra entrar
-    if(user_client(request.user,False) or user_executive(request.user,False)):
+    if(user_client(request.user,False)):
         return redirect('cars')
     data = {}
     data['tittle'] = "Editar auto"
@@ -227,7 +233,7 @@ def edit_executive(request, exe_id):
 @login_required(login_url='/auth/login')
 def list_clients(request):
     #si es false el super admin no podra entrar
-    if(user_client(request.user,False) or user_executive(request.user,False)):
+    if(user_client(request.user,False)):
         return redirect('cars')
     data= {}
     data["request"] = request
@@ -249,7 +255,7 @@ def list_clients(request):
 @login_required(login_url='/auth/login')
 def client_add(request):
     #si es false el super admin no podra entrar
-    if(user_client(request.user,False) or user_executive(request.user,False)):
+    if(user_client(request.user,False)):
         return redirect('cars')
     data = {}
     data['title'] = "Agregar Cliente"
@@ -277,7 +283,7 @@ def client_add(request):
 @login_required(login_url='/auth/login')
 def delete_client(request, id):
     #si es false el super admin no podra entrar
-    if(user_client(request.user,False) or user_executive(request.user,False)):
+    if(user_client(request.user,False)):
         return redirect('cars')
     data = {}
     template_name = 'list_clients.html'
@@ -289,7 +295,7 @@ def delete_client(request, id):
 @login_required(login_url='/auth/login')
 def edit_client(request, cli_id):
     #si es false el super admin no podra entrar
-    if(user_client(request.user,False) or user_executive(request.user,False)):
+    if(user_client(request.user,False)):
         return redirect('cars')
     data = {}
     data['tittle'] = "Editar Cliente"
