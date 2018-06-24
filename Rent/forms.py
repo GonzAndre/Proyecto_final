@@ -49,7 +49,7 @@ class RentForm(ModelForm):
 class UserForm(ModelForm):
     password1 = forms.CharField(label='Enter password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Confirm password', widget=forms.PasswordInput)
-    
+
     class Meta:
         model = User
-        fields = ['username','password1','password2',]
+        fields = ('username','password1', 'password2', )

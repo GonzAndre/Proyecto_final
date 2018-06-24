@@ -29,11 +29,12 @@
               <a class="nav-link" href="lista_ejecutivos">Ejecutivos</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="#">Clientes</a>
+              <a class="nav-link" href="lista_clientes">Clientes</a>
             </li>
           </ul>
           <form class="form-inline">
-            <button class="btn btn-outline-info my-2 my-sm-0" type="submit"> <a class="nav-link" href="{% url 'cars' %}">Iniciar sesión</a> </button>
+            <a class="nav-link" href="#">{{request.user}}</a>
+            <button class="btn btn-outline-info my-2 my-sm-0" type="submit"> <a class="nav-link" href="{% url 'auth_logout' %}">Cerrar sesión</a> </button>
           </form>
         </div>
       </nav>
@@ -71,10 +72,10 @@
                             Action
                           </button>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <a href="{% url 'edit_client' client.pk %}">
+                            <a href="{% url 'edit_client' cli.pk %}">
                               <button class="dropdown-item" type="button">Editar</button>
                             </a>
-                            <a href = "{% url 'delete_client' client.pk %}">
+                            <a href = "{% url 'delete_client' cli.pk %}">
                               <button class="dropdown-item delete" type="button">Eliminar</button>
                             </a>
                           </div>

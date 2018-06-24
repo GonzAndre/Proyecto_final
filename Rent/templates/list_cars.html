@@ -23,7 +23,7 @@
               <a class="nav-link" href="index">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="#">Autos</a>
+              <a class="nav-link" href="lista_autos">Autos</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="lista_ejecutivos">Ejecutivos</a>
@@ -33,7 +33,8 @@
             </li>
           </ul>
           <form class="form-inline">
-            <button class="btn btn-outline-info my-2 my-sm-0" type="submit"> <a class="nav-link" href="{% url 'cars' %}">Iniciar sesión</a> </button>
+            <a class="nav-link" href="#">{{request.user}}</a>
+            <button class="btn btn-outline-info my-2 my-sm-0" type="submit"> <a class="nav-link" href="{% url 'auth_logout' %}">Cerrar sesión</a> </button>
           </form>
         </div>
       </nav>

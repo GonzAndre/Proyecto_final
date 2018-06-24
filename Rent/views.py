@@ -66,12 +66,12 @@ def index(request):
         return render(request, template_name, data)
 
 
-
-#Views Cars    
+#Views Cars
+@login_required(login_url='/auth/login')
 def list_cars(request):
     #si es false el super admin no podra entrar
-    if(user_client(request.user,False) and user_executive(request.user,False)):
-        return redirect('index')
+    if(user_client(request.user,False) or user_executive(request.user,False)):
+        return redirect('cars')
     data= {}
     data["request"] = request
     object_list = Car.objects.all().order_by('-id')
@@ -88,8 +88,12 @@ def list_cars(request):
         data['object_list'] = paginator.page(paginator.num_pages)
     template_name = 'list_cars.html'
     return render(request, template_name, data)
-    
+
+@login_required(login_url='/auth/login')
 def car_add(request):
+    #si es false el super admin no podra entrar
+    if(user_client(request.user,False) or user_executive(request.user,False)):
+        return redirect('cars')
     data = {}
     data["request"] = request
     if request.method == "POST":
@@ -107,14 +111,22 @@ def car_add(request):
     template_name = 'add_car.html'
     return render(request, template_name, data)
 
+@login_required(login_url='/auth/login')
 def delete_car(request, id):
+    #si es false el super admin no podra entrar
+    if(user_client(request.user,False) or user_executive(request.user,False)):
+        return redirect('cars')
     data = {}
     template_name = 'list_cars.html'
     data['car'] = Car.objects.all()
     Car.objects.filter(pk=id).delete()
     return HttpResponseRedirect(reverse('list_cars'))
 
+@login_required(login_url='/auth/login')
 def edit_car(request, car_id):
+    #si es false el super admin no podra entrar
+    if(user_client(request.user,False) or user_executive(request.user,False)):
+        return redirect('cars')
     data = {}
     data['tittle'] = "Editar auto"
     data["request"] = request
@@ -130,11 +142,11 @@ def edit_car(request, car_id):
 
 
 #Views Ejecutives
-
+@login_required(login_url='/auth/login')
 def list_executives(request):
     #si es false el super admin no podra entrar
-    if(user_client(request.user,False) and user_executive(request.user,False)):
-        return redirect('index')
+    if(user_client(request.user,False) or user_executive(request.user,False)):
+        return redirect('cars')
     data= {}
     data["request"] = request
     object_list = Executive.objects.all().order_by('-id')
@@ -152,39 +164,52 @@ def list_executives(request):
     template_name = 'list_executives.html'
     return render(request, template_name, data)
 
+@login_required(login_url='/auth/login')
 def executive_add(request):
-    if(user_executive(request.user,False)):
-        return redirect('index')
+    #si es false el super admin no podra entrar
+    if(user_client(request.user,False) or user_executive(request.user,False)):
+        return redirect('cars')
     data = {}
+    data['tittle'] = "Agregar Ejecutivo"
+    data["request"] = request
     if request.method == "POST":
+        print(request.POST)
         data['form'] = ExecutiveForm(request.POST, request.FILES)
-        use = User.objects.all()
-        users = User.objects.get(pk = len(use))
+        data['form2'] = UserForm(request.POST, request.FILES)
 
-        print(users)
-        if (data['form'].is_valid()):
+        if data['form2'].is_valid():
             # aca el formulario valido
-            us = Executive(name=request.POST["name"],birthday = request.POST["birthday"], age=request.POST["age"],
-            email=request.POST["email"],picture=request.POST["picture"], rut=request.POST["rut"], dv=request.POST["dv"])
-            us.user = users
-            us.save()
+            if data['form'].is_valid():
+                sav = data['form'].save(commit=False)
+                sav2 = User.objects.create_user(username= request.POST['username'], password= request.POST['password1'])
+                sav.user = sav2
+                sav.save()
             return redirect('list_executives')
-            
+
     else:
+        data['form2'] = UserForm()
         data['form'] = ExecutiveForm()
 
-        data['tittle'] = "Agregar Ejecutivo"
     template_name = 'add_executive.html'
     return render(request, template_name, data)
 
+@login_required(login_url='/auth/login')
 def delete_executive(request, id):
+    #si es false el super admin no podra entrar
+    if(user_client(request.user,False) or user_executive(request.user,False)):
+        return redirect('cars')
     data = {}
     template_name = 'list_executives.html'
     data['executive'] = Executive.objects.all()
-    Executive.objects.filter(pk=id).delete()
+    User.objects.filter(pk=user_id).delete()
+    Executive.objects.filter(pk=exe_id).delete()
     return HttpResponseRedirect(reverse('list_executives'))
 
+@login_required(login_url='/auth/login')
 def edit_executive(request, exe_id):
+    #si es false el super admin no podra entrar
+    if(user_client(request.user,False) or user_executive(request.user,False)):
+        return redirect('cars')
     data = {}
     data['tittle'] = "Editar Ejecutivo"
     data["request"] = request
@@ -199,11 +224,11 @@ def edit_executive(request, exe_id):
     return render(request, template_name, data)
 
 #Views Client
-
+@login_required(login_url='/auth/login')
 def list_clients(request):
     #si es false el super admin no podra entrar
-    if(user_client(request.user,False) and user_executive(request.user,False)):
-        return redirect('index')
+    if(user_client(request.user,False) or user_executive(request.user,False)):
+        return redirect('cars')
     data= {}
     data["request"] = request
     object_list = Client.objects.all().order_by('-id')
@@ -221,39 +246,51 @@ def list_clients(request):
     template_name = 'list_clients.html'
     return render(request, template_name, data)
 
+@login_required(login_url='/auth/login')
 def client_add(request):
-    if(user_client(request.user,False)):
-        return redirect('index')
+    #si es false el super admin no podra entrar
+    if(user_client(request.user,False) or user_executive(request.user,False)):
+        return redirect('cars')
     data = {}
+    data['title'] = "Agregar Cliente"
+    data["request"] = request
     if request.method == "POST":
+        print(request.POST)
         data['form'] = ClientForm(request.POST, request.FILES)
-        use = User.objects.all()
-        users = User.objects.get(pk = len(use))
+        data['form2'] = UserForm(request.POST, request.FILES)
 
-        print(users)
-        if (data['form'].is_valid()):
+        if data['form2'].is_valid():
             # aca el formulario valido
-            us = Client(name=request.POST["name"],birthday = request.POST["birthday"], age=request.POST["age"],
-            email=request.POST["email"], rut=request.POST["rut"], dv=request.POST["dv"])
-            us.user = users
-            us.save()
+            if data['form'].is_valid():
+                sav = data['form'].save(commit=False)
+                sav2 = User.objects.create_user(username= request.POST['username'], password= request.POST['password1'])
+                sav.user = sav2
+                sav.save()
             return redirect('list_clients')
-            
     else:
+        data['form2'] = UserForm()
         data['form'] = ClientForm()
 
-        data['tittle'] = "Agregar Cliente"
     template_name = 'add_client.html'
     return render(request, template_name, data)
 
+@login_required(login_url='/auth/login')
 def delete_client(request, id):
+    #si es false el super admin no podra entrar
+    if(user_client(request.user,False) or user_executive(request.user,False)):
+        return redirect('cars')
     data = {}
     template_name = 'list_clients.html'
     data['client'] = Client.objects.all()
-    Client.objects.filter(pk=id).delete()
+    User.objects.filter(pk=user_id).delete()
+    Client.objects.filter(pk=cli_id).delete()
     return HttpResponseRedirect(reverse('list_clients'))
 
+@login_required(login_url='/auth/login')
 def edit_client(request, cli_id):
+    #si es false el super admin no podra entrar
+    if(user_client(request.user,False) or user_executive(request.user,False)):
+        return redirect('cars')
     data = {}
     data['tittle'] = "Editar Cliente"
     data["request"] = request

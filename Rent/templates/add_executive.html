@@ -23,7 +23,8 @@
       <ul class="navbar-nav mr-auto">
       </ul>
       <form class="form-inline">
-        <button class="btn btn-outline-info my-2 my-sm-0" type="submit"> <a class="nav-link" href="{% url 'cars' %}">Iniciar sesión</a> </button>
+        <a class="nav-link" href="#">{{request.user}}</a>
+          <button class="btn btn-outline-info my-2 my-sm-0" type="submit"> <a class="nav-link" href="{% url 'auth_logout' %}">Cerrar sesión</a> </button>
       </form>
     </div>
   </nav>
@@ -36,7 +37,9 @@
 
                 <form action="" method="POST" enctype="multipart/form-data">{% csrf_token %}
 
+                    {% bootstrap_form form2 %}
                     {% bootstrap_form form %}
+
                 <input type="hidden" name="user" id="user">
 
                 <input type="submit" value="Enviar" class="btn btn-primary btn-lg btn-block">
