@@ -26,11 +26,13 @@
               <a class="nav-link" href="lista_autos">Autos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="lista_ejecutivos">Ejecutivos</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" href="lista_clientes">Clientes</a>
             </li>
+            {% if inicio == 3 %}
+            <li class="nav-item">
+              <a class="nav-link" href="lista_ejecutivos">Ejecutivos</a>
+            </li>
+            {% endif %}
           </ul>
           <form class="form-inline">
             <a class="nav-link" href="#">{{request.user}}</a>

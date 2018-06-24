@@ -16,6 +16,22 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+    <div class="navbar-collapse collapse show" id="navbarColor01" style="">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="index">Home <span class="sr-only">(current)</span></a>
+            </li>
+            {% if inicio == 2 %}
+            <li class="nav-item">
+              <a class="nav-link" href="lista_autos">Autos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="lista_clientes">Clientes</a>
+            </li>
+            {% endif %}
+            
+          </ul>
+    </div>
 
     <div class="navbar-collapse collapse show" id="navbarColor01" style="">
       <ul class="navbar-nav mr-auto">
@@ -25,9 +41,12 @@
         {% if inicio == 0 %}
         <button class="btn btn-outline-info my-2 my-sm-0" type="submit"> <a class="nav-link" href="{% url 'auth_login' %}">Iniciar sesión</a> </button>
         {% endif %}
-        {% if inicio == 1 %}
+        {% if inicio == 2  %}
         <button class="btn btn-outline-info my-2 my-sm-0" type="submit"> <a class="nav-link" href="{% url 'auth_logout' %}">Cerrar sesión</a> </button>
-        {% endif %}              
+        {% endif %}
+        {% if inicio == 1  %}
+        <button class="btn btn-outline-info my-2 my-sm-0" type="submit"> <a class="nav-link" href="{% url 'auth_logout' %}">Cerrar sesión</a> </button>
+        {% endif %}             
       </form>
     </div>
   </nav>
