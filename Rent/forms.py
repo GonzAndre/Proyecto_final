@@ -22,7 +22,19 @@ class ExecutiveForm(ModelForm):
         model = Executive
         fields = ['name', 'birthday', 'age', 'email','picture','rut','dv']
 
+class EditExecutive(ModelForm):
+    
+    class Meta:
+        model = Executive
+        fields = ['name', 'birthday', 'age', 'email','picture','rut','dv']
+
 class ClientForm(ModelForm):
+    
+    class Meta:
+        model = Client
+        fields = ['name', 'birthday', 'age', 'email','rut','dv']
+
+class EditClient(ModelForm):
     
     class Meta:
         model = Client
@@ -37,7 +49,7 @@ class RentForm(ModelForm):
 class UserForm(ModelForm):
     password1 = forms.CharField(label='Enter password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Confirm password', widget=forms.PasswordInput)
-    
+
     class Meta:
         model = User
-        fields = ['username','password1','password2',]
+        fields = ('username','password1', 'password2', )

@@ -14,19 +14,20 @@
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">SafeCar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+        <a class="navbar-brand" href="#">SafeCar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="navbar-collapse collapse show" id="navbarColor01" style="">
-      <ul class="navbar-nav mr-auto">
-      </ul>
-      <form class="form-inline">
-        <button class="btn btn-outline-info my-2 my-sm-0" type="submit"> <a class="nav-link" href="{% url 'cars' %}">Iniciar sesión</a> </button>
-      </form>
-    </div>
-  </nav>
+        <div class="navbar-collapse collapse show" id="navbarColor01" style="">
+          <ul class="navbar-nav mr-auto">
+          </ul>
+          <form class="form-inline">
+            <a class="nav-link" href="#">{{request.user}}</a>
+            <button class="btn btn-outline-info my-2 my-sm-0" type="submit"> <a class="nav-link" href="{% url 'auth_logout' %}">Cerrar sesión</a> </button>
+          </form>
+        </div>
+      </nav>
    
    <div class="container">
         

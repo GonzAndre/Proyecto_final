@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 
-    <title>Listar Autos</title>
+    <title>Listar Ejecutivos</title>
   </head>
   <body>
    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -22,10 +22,10 @@
             <li class="nav-item ">
               <a class="nav-link" href="index">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="lista_autos">Autos</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item active">
               <a class="nav-link" href="lista_ejecutivos">Ejecutivos</a>
             </li>
             <li class="nav-item">
@@ -41,10 +41,10 @@
     <div class="container">        
             <div class="row">
             <div class="col-md-2">
-              <h1>Autos</h1>
+              <h1>Ejecutivos</h1>
             </div>
             <div class="col-md-2 offset-md-8">
-              <a href="{% url 'car_add' %}"><button type="button" class="btn btn-outline-info my-2 my-">Agregar Auto</button></a>
+              <a href="{% url 'executive_add' %}"><button type="button" class="btn btn-outline-info my-2 my-">Agregar Ejecutivo</button></a>
             </div>
           
         </div>
@@ -55,27 +55,27 @@
                 <table class="table" id="datos">
                   <thead>
                     <tr>
-                      <th scope="col">Modelo</th>
-                      <th scope="col">Color</th>
-                      <th scope="col">Patente</th>
+                      <th scope="col">Nombre</th>
+                      <th scope="col">Fecha Nacimiento</th>
+                      <th scope="col">Email</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {% for car in object_list %}
+                    {% for exe in object_list %}
                     <tr>
-                      <td>{{car.model}}</td>
-                      <td>{{car.color}}</td>
-                      <td>{{car.patent}}</td>
+                      <td>{{exe.name}}</td>
+                      <td>{{exe.birthday}}</td>
+                      <td>{{exe.email}}</td>
                       <td>
                         <div class="dropdown">
                             <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Action
                           </button>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <a href="{% url 'edit_car' car.pk %}">
+                            <a href="{% url 'edit_executive' exe.pk %}">
                               <button class="dropdown-item" type="button">Editar</button>
                             </a>
-                            <a href = "{% url 'delete_car' car.pk %}">
+                            <a href = "{% url 'delete_executive' exe.pk %}">
                               <button class="dropdown-item delete" type="button">Eliminar</button>
                             </a>
                           </div>
