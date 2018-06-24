@@ -37,11 +37,24 @@ def user_executive(user,executive):
         except Exception as e:
             return False
         
-
+def all_user(user, log):
+    if(log):
+        if Executive.objects.get(user=user)
+            return False
+        except Exception as e:
+            return True
+    else:
+        try:
+            Executive.objects.get(user=user)
+            return True
+        except Exception as e:
+            return False
+    
 def index(request):
     data = {}
     data['name'] = 'Car'
     data["request"] = request
+    data['inicio'] = 0
     
     try:
         cliente = Client.objects.get(user=request.user)
