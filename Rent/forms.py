@@ -8,7 +8,7 @@ class CarForm(ModelForm):
     
     class Meta:
         model = Car
-        fields = ['model', 'color', 'patent', 'picture',]
+        fields = ['brand','model', 'color', 'patent', 'picture',]
         
 class EditCar(ModelForm):
 

@@ -50,8 +50,7 @@ def index(request):
     data["request"] = request
     
     try:
-        cliente = Client.objects.get(user=request.user)
-        object_list = Car.objects().order_by('-id')
+        object_list = Car.objects.all().order_by('-id')
 
         paginator = Paginator(object_list, 10)
         page = request.GET.get('page')

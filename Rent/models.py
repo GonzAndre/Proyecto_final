@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Car(models.Model):
+    brand = models.CharField(max_length=120)
     model = models.CharField(max_length=120)
     color = models.CharField(max_length=120)
     picture = models.ImageField(upload_to='car')
