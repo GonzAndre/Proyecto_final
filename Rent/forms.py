@@ -22,7 +22,19 @@ class ExecutiveForm(ModelForm):
         model = Executive
         fields = ['name', 'birthday', 'age', 'email','picture','rut','dv']
 
+class EditExecutive(ModelForm):
+    
+    class Meta:
+        model = Executive
+        fields = ['name', 'birthday', 'age', 'email','picture','rut','dv']
+
 class ClientForm(ModelForm):
+    
+    class Meta:
+        model = Client
+        fields = ['name', 'birthday', 'age', 'email','rut','dv']
+
+class EditClient(ModelForm):
     
     class Meta:
         model = Client

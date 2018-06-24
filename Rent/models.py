@@ -26,7 +26,7 @@ class Executive(models.Model):
         return '{}-{}' . format(self.rut, self.dv)
 
     def __str__(self):
-        return self.name
+        return self.full_rut()
     
 class Client(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
