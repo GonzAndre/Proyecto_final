@@ -310,3 +310,46 @@ def edit_client(request, cli_id):
     data['data'] = EditClient(instance=Client.objects.get(pk=cli_id))
 
     return render(request, template_name, data)
+
+
+#Views Arriendos
+@login_required(login_url='/auth/login')
+def list_rents(request):
+    #si es false el super admin no podra entrar
+    if(user_client(request.user,False)):
+        return redirect('cars')
+    
+    data = {}
+    
+    rents = Rent.objects.all()
+    # players = matchs.Player_set.all()
+    for i in rents:
+        print(i.car)
+        print(i.client)
+        print(i.executive)
+
+    data["objects_list"] = rents
+    template_name = 'list_rents.html'
+    return render(request, template_name, data)
+
+@login_required(login_url='/auth/login')
+def rent_add(request):
+    #si es false el super admin no podra entrar
+    if(user_client(request.user,False)):
+        return redirect('cars')
+    data = {}
+    data["request"] = request
+    if request.method == "POST":
+        data['form'] = RentForm(request.POST, request.FILES)
+
+        if data['form'].is_valid():
+            # aca el formulario valido
+            data['form'].save()
+
+            return redirect('list_rents')
+
+    else:
+        data['form'] = RentForm()
+
+    template_name = 'add_rent.html'
+    return render(request, template_name, data)
