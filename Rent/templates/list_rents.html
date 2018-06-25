@@ -22,28 +22,23 @@
             <li class="nav-item ">
               <a class="nav-link" href="index">Home <span class="sr-only">(current)</span></a>
             </li>
-            {% if inicio == 1 %}
-            <li class="nav-item">
-              <a class="nav-link" href="lista_arriendos">Arriendos</a>
-            </li>
-            {% endif %}
             {% if inicio == 2 %}
             <li class="nav-item">
-              <a class="nav-link active" href="lista_autos">Autos</a>
+              <a class="nav-link" href="lista_autos">Autos</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="lista_clientes">Clientes</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="lista_arriendos">Arriendos</a>
+              <a class="nav-link active" href="lista_arriendos">Arriendos</a>
             </li>
             {% endif %}
             {% if inicio == 3 %}
             <li class="nav-item">
-              <a class="nav-link active" href="lista_autos">Autos</a>
+              <a class="nav-link" href="lista_autos">Autos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="lista_arriendos">Arriendos</a>
+              <a class="nav-link active" href="lista_arriendos">Arriendos</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="lista_clientes">Clientes</a>
@@ -61,54 +56,53 @@
       </nav>
     <div class="container">        
             <div class="row">
-            <div class="col-md-2">
-              <h1>Autos</h1>
+                <div class="col-md-2">
+                  <h1>Autos</h1>
+                </div>
             </div>
-            <div class="col-md-2 offset-md-8">
-              <a href="{% url 'car_add' %}"><button type="button" class="btn btn-outline-info my-2 my-">Agregar Auto</button></a>
-            </div>
-          
-        </div>
         <div class="row">
             <div class="col-md-12">
-                
-
                 <table class="table" id="datos">
                   <thead>
                     <tr>
-                      <th scope="col">Modelo</th>
-                      <th scope="col">Color</th>
-                      <th scope="col">Patente</th>
+                      <th scope="col">Auto</th>
+                      <th scope="col">Cliente</th>
+                      <th scope="col">Ejecutivo</th>
+                      <th scope="col">Fecha inicio</th>
+                      <th scope="col">Fecha entrega</th>
+                      <th scope="col">Estatus</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {% for car in object_list %}
+                    {% for rent in object_list %}
                     <tr>
-                      <td>{{car.model}}</td>
-                      <td>{{car.color}}</td>
-                      <td>{{car.patent}}</td>
+                      <td>{{rent.car}}</td>
+                      <td>{{rent.client}}</td>
+                      <td>{{rent.executive}}</td>
+                      <td>{{rent.start_date}}</td>
+                      <td>{{rent.end_date}}</td>
+                      <td>{{rent.status}}</td>
                       <td>
-                        <div class="dropdown">
-                            <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Action
-                          </button>
-                          <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <a href="{% url 'edit_car' car.pk %}">
-                              <button class="dropdown-item" type="button">Editar</button>
-                            </a>
-                            <a href = "{% url 'delete_car' car.pk %}">
-                              <button class="dropdown-item delete" type="button">Eliminar</button>
-                            </a>
-                          </div>
-                        </div>
+                         {% if rent.status == 'E' %}
+                         <a><button class="btn btn-success" type="button">E</button></a>
+                         <a href="{% url 'edit_status' rent.pk 'A' %}" ><button class="btn btn-secondary" type="button">A</button></a>
+                         <a href="{% url 'edit_status' rent.pk 'C' %}"><button class="btn btn-secondary" type="button">C</button></a>
+                         {% endif %}
+                         {% if rent.status == 'A' %}
+                         <a href="{% url 'edit_status' rent.pk 'E' %}" ><button class="btn btn-secondary" type="button">E</button></a>
+                         <a><button class="btn btn-warning" type="button">A</button></a>
+                         <a href="{% url 'edit_status' rent.pk 'C' %}" ><button class="btn btn-secondary" type="button">C</button></a>
+                         {% endif %}
+                         {% if rent.status == 'C' %}
+                         <a href="{% url 'edit_status' rent.pk 'E' %}" ><button class="btn btn-secondary" type="button">E</button></a>
+                         <a href="{% url 'edit_status' rent.pk 'A' %}" ><button class="btn btn-secondary" type="button">A</button></a>
+                         <a><button class="btn btn-danger" type="button">C</button></a>
+                         {% endif %}
                       </td>
                     </tr>
                     {% endfor %} 
-
                   </tbody>
                 </table>
-
-
             </div>
         </div>
         <div class="row">

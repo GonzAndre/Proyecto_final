@@ -52,6 +52,7 @@ class Rent(models.Model):
     executive = models.ForeignKey(Executive, on_delete=models.CASCADE)
     start_date = models.DateField()
     end_date = models.DateField()
+    status = models.CharField(max_length=60, choices=(('E','Entregado'),('C','Cancelado'),('A','Arrendado')),default = 'A')
 
     def _str_(self):
         return '%s - %s - %s' % (self.client.name, self.car.patent, self.executive.name)
