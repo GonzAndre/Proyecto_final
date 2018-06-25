@@ -1,3 +1,5 @@
+{% load bootstrap4 %}
+{% load static %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -19,8 +21,13 @@
     <div class="navbar-collapse collapse show" id="navbarColor01" style="">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="index">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link active" href="index">Home <span class="sr-only">(current)</span></a>
             </li>
+            {% if inicio == 1 %}
+            <li class="nav-item">
+              <a class="nav-link" href="lista_arriendos">Arriendos</a>
+            </li>
+            {% endif %}
             {% if inicio == 2 %}
             <li class="nav-item">
               <a class="nav-link" href="lista_autos">Autos</a>
@@ -28,8 +35,24 @@
             <li class="nav-item">
               <a class="nav-link" href="lista_clientes">Clientes</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="lista_arriendos">Arriendos</a>
+            </li>
             {% endif %}
-            
+            {% if inicio == 3 %}
+            <li class="nav-item">
+              <a class="nav-link" href="lista_autos">Autos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="lista_arriendos">Arriendos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="lista_clientes">Clientes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="lista_ejecutivos">Ejecutivos</a>
+            </li>
+            {% endif %}
           </ul>
     </div>
 
@@ -46,7 +69,10 @@
         {% endif %}
         {% if inicio == 1  %}
         <button class="btn btn-outline-info my-2 my-sm-0" type="submit"> <a class="nav-link" href="{% url 'auth_logout' %}">Cerrar sesión</a> </button>
-        {% endif %}             
+        {% endif %}
+        {% if inicio == 3  %}
+        <button class="btn btn-outline-info my-2 my-sm-0" type="submit"> <a class="nav-link" href="{% url 'auth_logout' %}">Cerrar sesión</a> </button>
+        {% endif %}                 
       </form>
     </div>
   </nav>
@@ -57,13 +83,13 @@
                {% for Cars in object_list %}
                <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
                <div class="card text-center border-primary mb-3" style="width: 18rem;">
-                  <img class="card-img-top" data-src="holder.js/100px180/" alt="{{Cars.picture}}" style="height: 180px; width: 100%; display: block;" src="{{Cars.picture}}" data-holder-rendered="true">
+                  <img class="card-img-top" alt="{{Cars.picture}}" style="height: 180px; width: 100%; display: block;" src="{% get_static_prefix %}{{Cars.picture}}" data-holder-rendered="true">
                   <div class="card-body">
                     <h5 class="card-header text-white bg-dark mb-3">{{Cars.brand}}</h5>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">Modelo: {{Cars.model}}</li>
                         <li class="list-group-item">Color: {{Cars.color}}</li>
-                        <li class="list-group-item"><a href="" class="btn btn-primary">Arrendar</a></li>
+                        <li class="list-group-item"><a href= "{% url 'rent_add' Cars.pk %}" class="btn btn-primary">Arrendar</a></li>
                     </ul>
                   </div>
                 </div>

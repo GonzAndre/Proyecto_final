@@ -39,12 +39,16 @@ def user_executive(user,executive):
         
     
 def index(request):
+    print (request.user.is_staff)
+    
     data = {}
     data['inicio'] = 0
     if (user_client(request.user,False)):
         data['inicio']= 1
     elif (user_executive(request.user,False)):
         data['inicio']= 2
+    elif (request.user.is_staff == True):
+        data['inicio'] = 3
     
     data['name'] = 'Car'
     data["request"] = request
@@ -74,11 +78,17 @@ def index(request):
 #Views Cars
 @login_required(login_url='/auth/login')
 def list_cars(request):
-    #si es false el super admin no podra entrar
-    if(user_client(request.user,False)):
-        return redirect('cars')
     
     data= {}
+    data['inicio'] = 0
+    if (user_client(request.user,False)):
+        data['inicio']= 1
+        # arreglar filter de autos del cliente
+    elif (user_executive(request.user,False)):
+        data['inicio']= 2
+    elif (request.user.is_staff == True):
+        data['inicio'] = 3
+    
     data["request"] = request
     object_list = Car.objects.all().order_by('-id')
 
@@ -151,9 +161,15 @@ def edit_car(request, car_id):
 @login_required(login_url='/auth/login')
 def list_executives(request):
     #si es false el super admin no podra entrar
+    data = {}
+    data['inicio'] = 0
+    
     if(user_client(request.user,False) or user_executive(request.user,False)):
         return redirect('cars')
-    data= {}
+
+    elif (request.user.is_staff == True):
+        data['inicio'] = 3
+        
     data["request"] = request
     object_list = Executive.objects.all().order_by('-id')
 
@@ -200,7 +216,7 @@ def executive_add(request):
     return render(request, template_name, data)
 
 @login_required(login_url='/auth/login')
-def delete_executive(request, id):
+def delete_executive(request, user_id, exe_id):
     #si es false el super admin no podra entrar
     if(user_client(request.user,False) or user_executive(request.user,False)):
         return redirect('cars')
@@ -233,9 +249,15 @@ def edit_executive(request, exe_id):
 @login_required(login_url='/auth/login')
 def list_clients(request):
     #si es false el super admin no podra entrar
-    if(user_client(request.user,False)):
+    data = {}
+    data['inicio'] = 0
+    if (user_client(request.user,False)):
         return redirect('cars')
-    data= {}
+    elif (user_executive(request.user,False)):
+        data['inicio']= 2
+    elif (request.user.is_staff == True):
+        data['inicio'] = 3
+        
     data["request"] = request
     object_list = Client.objects.all().order_by('-id')
 
@@ -281,7 +303,7 @@ def client_add(request):
     return render(request, template_name, data)
 
 @login_required(login_url='/auth/login')
-def delete_client(request, id):
+def delete_client(request, user_id,client_id):
     #si es false el super admin no podra entrar
     if(user_client(request.user,False)):
         return redirect('cars')
@@ -289,7 +311,7 @@ def delete_client(request, id):
     template_name = 'list_clients.html'
     data['client'] = Client.objects.all()
     User.objects.filter(pk=user_id).delete()
-    Client.objects.filter(pk=cli_id).delete()
+    Client.objects.filter(pk=client_id).delete()
     return HttpResponseRedirect(reverse('list_clients'))
 
 @login_required(login_url='/auth/login')
@@ -309,3 +331,84 @@ def edit_client(request, cli_id):
     data['data'] = EditClient(instance=Client.objects.get(pk=cli_id))
 
     return render(request, template_name, data)
+
+@login_required(login_url='/auth/login')
+def list_rents(request):
+    #si es false el super admin no podra entrar
+    data = {}
+    data['inicio'] = 0
+    if (user_client(request.user,False)):
+        return redirect('cars')
+    elif (user_executive(request.user,False)):
+        data['inicio']= 2
+    elif (request.user.is_staff == True):
+        data['inicio'] = 3
+    
+    data["request"] = request
+    object_list = Rent.objects.all().order_by('-id')
+
+    # players = matchs.Player_set.all()
+    for i in object_list:
+        print(i.car)
+        print(i.client)
+        print(i.executive)
+        print(i.status)
+        
+    
+    paginator = Paginator(object_list, 10)
+    page = request.GET.get('page')
+
+    try:
+        data['object_list'] = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        data['object_list'] = paginator.page(1)
+    except EmptyPage:
+        data['object_list'] = paginator.page(paginator.num_pages)
+
+    template_name = 'list_rents.html'
+    return render(request, template_name, data)
+
+@login_required(login_url='/auth/login')
+def rent_add(request,car_id):
+    print(car_id,request.user)
+    #si es false el super admin no podra entrar
+    if(user_client(request.user,False)):
+        return redirect('cars')
+    data = {}
+    data["request"] = request
+    if request.method == "POST":
+        data['form'] = RentForm(request.POST, request.FILES)
+
+        if data['form'].is_valid():
+            # aca el formulario valido
+            us = Rent(status = request.POST['A'],start_date = request.POST["start_date"], end_date =request.POST["end_date"])
+            cli = Client.objects.get(pk = request.POST["client"])
+            users = User.objects.get(username = request.user)
+            exe = Executive.objects.get(user = users)
+            cars = Car.objects.get(pk = car_id)
+            us.executive = exe
+            us.car = cars
+            us.client = cli
+            us.save()
+
+            return redirect('cars')
+
+    else:
+        data['form'] = RentForm()
+                                
+        
+    template_name = 'add_rent.html'
+    return render(request, template_name, data)
+
+def edit_status(request, id, leter):
+    #si es false el super admin no podra entrar
+    data = {}
+    template_name = 'list_rents.html'
+    data["request"] = request
+    arriendo = Rent.objects.get(pk=id)
+    arriendo.status = leter
+    arriendo.save()
+    object_list = Rent.objects.all().order_by('-id')
+    
+    return HttpResponseRedirect(reverse('list_rents'))

@@ -44,7 +44,7 @@ class RentForm(ModelForm):
     
     class Meta:
         model = Rent
-        fields = ['car', 'client', 'executive', 'start_date','end_date']
+        fields = ['client','status','start_date','end_date']
         
 class UserForm(ModelForm):
     password1 = forms.CharField(label='Enter password', widget=forms.PasswordInput)

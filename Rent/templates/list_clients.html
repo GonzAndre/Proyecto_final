@@ -22,13 +22,27 @@
             <li class="nav-item ">
               <a class="nav-link" href="index">Home <span class="sr-only">(current)</span></a>
             </li>
+            {% if inicio == 2 %}
             <li class="nav-item">
               <a class="nav-link" href="lista_autos">Autos</a>
             </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="lista_clientes">Clientes</a>
+            <li class="nav-item">
+              <a class="nav-link active" href="lista_clientes">Clientes</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="lista_arriendos">Arriendos</a>
+            </li>
+            {% endif %}
             {% if inicio == 3 %}
+            <li class="nav-item">
+              <a class="nav-link" href="lista_autos">Autos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="lista_arriendos">Arriendos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="lista_clientes">Clientes</a>
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="lista_ejecutivos">Ejecutivos</a>
             </li>
