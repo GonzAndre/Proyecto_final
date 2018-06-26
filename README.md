@@ -52,6 +52,5 @@ si todo funciona de forma correcta, deberia tener una salida similar a lo siguen
 
 7. Copiar la URL que indica al ejecutar el codigo anterior y agregarle Rent/index:
 
-  **Ejemplo :
-   http://127.0.0.1:8000/Rent/index**
+![index](https://user-images.githubusercontent.com/26631971/41943420-5a73ae86-7971-11e8-8020-8ec1235567f8.png)
 
