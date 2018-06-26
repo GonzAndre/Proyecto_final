@@ -4,7 +4,7 @@ Proyecto final - Desarrollo web - Tópicos 2
 
 Descipción del problema
 ========================================================================================================================================
-El problema de desarrollo web está enfocado en un rent a car, donde nos enfocaremos en el arriendo de auto, para ser mas específico se crearan tres diferentes tipos de entidades, estas son vehículo, cliente y ejecutivo, donde el vehículo y el ejecutivo van a tener "CRUD", también se realizará un autentificado, para los privilegios de los diferentes tipos de usuarios del sistema.
+El problema de desarrollo web está enfocado en un rent a car, donde nos enfocaremos en el arriendo de auto, para ser mas específico se crearan tres diferentes tipos de entidades, estas son vehículo, cliente y ejecutivo, donde estos van a tener "CRUD", también se realizará un autentificado, para los privilegios de los diferentes tipos de usuarios del sistema.
 >El usuario cliente solo tendrá acceso a los distintos vehículos que tiene la empresa y también puede visualizar los autos que arrendó con anterioridad
 
 >El usuario ejecutivo puede añadir nuevos vehículos, efectuar arriendo, cambiar estado actual de los vehículos, tambien puede añadir, eliminar y editar clientes.
