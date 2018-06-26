@@ -23,7 +23,7 @@ def auth_login(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect(reverse('list_cars'))
+                return HttpResponseRedirect(reverse('cars'))
             else:
                 print("usuario o contraseña no validos")
                 messages.warning(
