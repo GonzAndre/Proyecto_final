@@ -39,7 +39,6 @@ def user_executive(user,executive):
         
     
 def index(request):
-    print (request.user.is_staff)
     
     data = {}
     data['inicio'] = 0
@@ -216,15 +215,19 @@ def executive_add(request):
     return render(request, template_name, data)
 
 @login_required(login_url='/auth/login')
-def delete_executive(request, user_id, exe_id):
+def delete_executive(request, exe_id):
     #si es false el super admin no podra entrar
     if(user_client(request.user,False) or user_executive(request.user,False)):
         return redirect('cars')
+    #si es false el super admin no podra entrar
     data = {}
     template_name = 'list_executives.html'
     data['executive'] = Executive.objects.all()
-    User.objects.filter(pk=user_id).delete()
-    Executive.objects.filter(pk=exe_id).delete()
+
+    ejecutivo = Executive.objects.get(pk=exe_id)
+    usuario = User.objects.get(username = ejecutivo.user)
+    User.objects.filter(username=ejecutivo.user).delete()
+
     return HttpResponseRedirect(reverse('list_executives'))
 
 @login_required(login_url='/auth/login')
@@ -303,16 +306,23 @@ def client_add(request):
     return render(request, template_name, data)
 
 @login_required(login_url='/auth/login')
-def delete_client(request, user_id,client_id):
+def delete_client(request,client_id):
     #si es false el super admin no podra entrar
     if(user_client(request.user,False)):
         return redirect('cars')
     data = {}
     template_name = 'list_clients.html'
     data['client'] = Client.objects.all()
-    User.objects.filter(pk=user_id).delete()
-    Client.objects.filter(pk=client_id).delete()
+
+    cliente = Client.objects.get(pk=client_id)
+    usuario = User.objects.get(username = cliente.user)
+    User.objects.filter(username=cliente.user).delete()
+    print(usuario)
+    print(usuario.username)
+
     return HttpResponseRedirect(reverse('list_clients'))
+
+
 
 @login_required(login_url='/auth/login')
 def edit_client(request, cli_id):
@@ -338,7 +348,7 @@ def list_rents(request):
     data = {}
     data['inicio'] = 0
     if (user_client(request.user,False)):
-        return redirect('cars')
+        data['inicio']= 1
     elif (user_executive(request.user,False)):
         data['inicio']= 2
     elif (request.user.is_staff == True):
@@ -346,15 +356,13 @@ def list_rents(request):
     
     data["request"] = request
     object_list = Rent.objects.all().order_by('-id')
-
-    # players = matchs.Player_set.all()
-    for i in object_list:
-        print(i.car)
-        print(i.client)
-        print(i.executive)
-        print(i.status)
-        
+    if(data['inicio']==1):
+        users = User.objects.get(username = request.user)
+        cli = Client.objects.get(user = users)
+        print(cli.pk)
+        object_list=Rent.objects.filter(client=cli.pk)
     
+
     paginator = Paginator(object_list, 10)
     page = request.GET.get('page')
 
@@ -369,20 +377,30 @@ def list_rents(request):
     template_name = 'list_rents.html'
     return render(request, template_name, data)
 
-@login_required(login_url='/auth/login')
+
 def rent_add(request,car_id):
-    print(car_id,request.user)
+
+    data = {}
+    data['inicio'] = 0
+    if (request.user.is_staff == True):
+        data['inicio'] = 3
+    elif (user_executive(request.user,False)):
+        data['inicio']= 2
     #si es false el super admin no podra entrar
     if(user_client(request.user,False)):
         return redirect('cars')
-    data = {}
+    elif(data['inicio'] == 3):
+        return redirect('list_rents')
+    elif(data['inicio'] == 0):
+        return redirect('cars')
+
     data["request"] = request
     if request.method == "POST":
         data['form'] = RentForm(request.POST, request.FILES)
 
         if data['form'].is_valid():
             # aca el formulario valido
-            us = Rent(status = request.POST['A'],start_date = request.POST["start_date"], end_date =request.POST["end_date"])
+            us = Rent(start_date = request.POST["start_date"], end_date =request.POST["end_date"])
             cli = Client.objects.get(pk = request.POST["client"])
             users = User.objects.get(username = request.user)
             exe = Executive.objects.get(user = users)

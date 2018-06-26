@@ -8,11 +8,79 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 
-    <title>Listar Autos</title>
+    <link href="https://fonts.googleapis.com/css?family=Galada" rel="stylesheet">
+
+    <style>
+      .row{}
+      table{}
+      h1 {
+        font-family: 'Galada', cursive;
+        font-style: normal;
+        font-weight: 400;
+        src: local('Galada'),
+        url(opensans.eot) format('embedded-opentype'),
+        url(opensans.ttf) format('truetype'),
+        url(opensans.otf) format('opentype'),
+        url(opensans.woff) format('woff');
+      }
+
+      .logo{
+        font-family: 'Galada', cursive;
+        font-style: normal;
+        font-weight: 400;
+        src: local('Galada'),
+        url(opensans.eot) format('embedded-opentype'),
+        url(opensans.ttf) format('truetype'),
+        url(opensans.otf) format('opentype'),
+        url(opensans.woff) format('woff');
+        border-style: solid;
+        border-radius: 6px;
+      }
+
+
+      th{
+        background-color: #404040;
+        color: #ffffff;
+      }
+
+      @media screen and (max-width: 2000px){
+        table{
+          width: 100%;
+        }
+        .row{
+          width: 100%;
+        }
+      }
+      @media screen and (max-width: 991.98px){
+        table{
+          width: 100%;
+        }
+        .row{
+          width: 100%;
+        }
+      }
+      @media screen and (max-width: 767.98px){
+        table{
+          width: 100%;
+        }
+        .row{
+          width: 100%;
+        }
+      }
+      @media screen and (max-width: 575.98px){
+        table{
+          width: 100%;
+        }
+        .row{
+          width: 100%;
+        }
+      }
+    </style>
+    <title>SafeCar</title>
   </head>
   <body>
    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">SafeCar</a>
+        <logo class="navbar-brand logo">SafeCar</logo>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -22,6 +90,11 @@
             <li class="nav-item ">
               <a class="nav-link" href="index">Home <span class="sr-only">(current)</span></a>
             </li>
+            {% if inicio == 1 %}
+            <li class="nav-item">
+              <a class="nav-link active" href="lista_arriendos">Arriendos</a>
+            </li>
+            {% endif %}
             {% if inicio == 2 %}
             <li class="nav-item">
               <a class="nav-link" href="lista_autos">Autos</a>
@@ -57,7 +130,7 @@
     <div class="container">        
             <div class="row">
                 <div class="col-md-2">
-                  <h1>Autos</h1>
+                  <h1>Arriendos</h1>
                 </div>
             </div>
         <div class="row">
@@ -81,22 +154,69 @@
                       <td>{{rent.executive}}</td>
                       <td>{{rent.start_date}}</td>
                       <td>{{rent.end_date}}</td>
-                      <td>{{rent.status}}</td>
                       <td>
+                         {% if inicio == 2 %}
                          {% if rent.status == 'E' %}
-                         <a><button class="btn btn-success" type="button">E</button></a>
-                         <a href="{% url 'edit_status' rent.pk 'A' %}" ><button class="btn btn-secondary" type="button">A</button></a>
-                         <a href="{% url 'edit_status' rent.pk 'C' %}"><button class="btn btn-secondary" type="button">C</button></a>
+                         <div class="btn-group" role="group" aria-label="Basic example">
+                          <a><button class="btn btn-success" type="button">E</button></a>
+                          <a href="{% url 'edit_status' rent.pk 'A' %}" ><button class="btn btn-secondary" type="button">A</button></a>
+                          <a href="{% url 'edit_status' rent.pk 'C' %}"><button class="btn btn-secondary" type="button">C</button></a>
+                          </div>
                          {% endif %}
                          {% if rent.status == 'A' %}
-                         <a href="{% url 'edit_status' rent.pk 'E' %}" ><button class="btn btn-secondary" type="button">E</button></a>
-                         <a><button class="btn btn-warning" type="button">A</button></a>
-                         <a href="{% url 'edit_status' rent.pk 'C' %}" ><button class="btn btn-secondary" type="button">C</button></a>
+                         <div class="btn-group" role="group" aria-label="Basic example">
+                          <a href="{% url 'edit_status' rent.pk 'E' %}" ><button class="btn btn-secondary" type="button">E</button></a>
+                          <a><button class="btn btn-warning" type="button">A</button></a>
+                          <a href="{% url 'edit_status' rent.pk 'C' %}" ><button class="btn btn-secondary" type="button">C</button></a>
+                          </div>
                          {% endif %}
                          {% if rent.status == 'C' %}
-                         <a href="{% url 'edit_status' rent.pk 'E' %}" ><button class="btn btn-secondary" type="button">E</button></a>
-                         <a href="{% url 'edit_status' rent.pk 'A' %}" ><button class="btn btn-secondary" type="button">A</button></a>
-                         <a><button class="btn btn-danger" type="button">C</button></a>
+                         <div class="btn-group" role="group" aria-label="Basic example">
+                          <a href="{% url 'edit_status' rent.pk 'E' %}" ><button class="btn btn-secondary" type="button">E</button></a>
+                          <a href="{% url 'edit_status' rent.pk 'A' %}" ><button class="btn btn-secondary" type="button">A</button></a>
+                          <a><button class="btn btn-danger" type="button">C</button></a>
+                          </div>
+                         {% endif %}
+                         {% endif %}
+                         {% if inicio == 3 %}
+                         {% if rent.status == 'E' %}
+                         <div class="btn-group" role="group" aria-label="Basic example">
+                          <a><button class="btn btn-success" type="button">E</button></a>
+                          <a href="{% url 'edit_status' rent.pk 'A' %}" ><button class="btn btn-secondary" type="button">A</button></a>
+                          <a href="{% url 'edit_status' rent.pk 'C' %}"><button class="btn btn-secondary" type="button">C</button></a>
+                          </div>
+                         {% endif %}
+                         {% if rent.status == 'A' %}
+                         <div class="btn-group" role="group" aria-label="Basic example">
+                          <a href="{% url 'edit_status' rent.pk 'E' %}" ><button class="btn btn-secondary" type="button">E</button></a>
+                          <a><button class="btn btn-warning" type="button">A</button></a>
+                          <a href="{% url 'edit_status' rent.pk 'C' %}" ><button class="btn btn-secondary" type="button">C</button></a>
+                          </div>
+                         {% endif %}
+                         {% if rent.status == 'C' %}
+                         <div class="btn-group" role="group" aria-label="Basic example">
+                          <a href="{% url 'edit_status' rent.pk 'E' %}" ><button class="btn btn-secondary" type="button">E</button></a>
+                          <a href="{% url 'edit_status' rent.pk 'A' %}" ><button class="btn btn-secondary" type="button">A</button></a>
+                          <a><button class="btn btn-danger" type="button">C</button></a>
+                          </div>
+                         {% endif %}
+                         {% endif %}
+                         {% if inicio == 1 %}
+                         {% if rent.status == 'E' %}
+                         <div class="btn-group" role="group" aria-label="Basic example">
+                          <a><button class="btn btn-success" type="button">E</button></a>
+                          </div>
+                         {% endif %}
+                         {% if rent.status == 'A' %}
+                         <div class="btn-group" role="group" aria-label="Basic example">
+                          <a><button class="btn btn-warning" type="button">A</button></a>
+                          </div>
+                         {% endif %}
+                         {% if rent.status == 'C' %}
+                         <div class="btn-group" role="group" aria-label="Basic example">
+                          <a><button class="btn btn-danger" type="button">C</button></a>
+                          </div>
+                         {% endif %}
                          {% endif %}
                       </td>
                     </tr>
