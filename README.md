@@ -1,9 +1,13 @@
 Proyecto final - Desarrollo web - Tópicos 2
 ========================================================================================================================================
-El problema de desarrollo web esta enfocado en un rent a car, donde nos enfocaremos en el arriendo de auto, para ser mas específico se crearan tres diferentes tipos de entidades, estas son vehículo, cliente y ejecutivo, donde el vehículo y el ejecutivo van a tener "CRUD", tambien se realizará un autentificador, para los privilegios de los diferentes tipos de usuarios del sistema.
->El usuario cliente solo tendrá acceso a los distintos vehiculos que tiene la empresa y tambien puede visualizar los autos que arrendó con anterioridad
 
->El usuario ejecutivo puede añadir nuevos vehiculos, efectuar arriendo, cambiar estado actual de los vehiculos, tambien puede añadir, eliminar y editar clientes.
+
+Descipción del problema
+========================================================================================================================================
+El problema de desarrollo web está enfocado en un rent a car, donde nos enfocaremos en el arriendo de auto, para ser mas específico se crearan tres diferentes tipos de entidades, estas son vehículo, cliente y ejecutivo, donde el vehículo y el ejecutivo van a tener "CRUD", también se realizará un autentificado, para los privilegios de los diferentes tipos de usuarios del sistema.
+>El usuario cliente solo tendrá acceso a los distintos vehículos que tiene la empresa y también puede visualizar los autos que arrendó con anterioridad
+
+>El usuario ejecutivo puede añadir nuevos vehículos, efectuar arriendo, cambiar estado actual de los vehículos, tambien puede añadir, eliminar y editar clientes.
 
 
 
@@ -13,8 +17,6 @@ El problema de desarrollo web esta enfocado en un rent a car, donde nos enfocare
 Como primera parte debes tener instalado python version 3.5.2 que lo puedes descargar de su respectivo sitio oficial.
 "Todos los pasos deben ser ejecutados desde la terminal"
 se explicará las acciones que debe hacer el usuario y su respectivo codigo para ello.
-
-1. Instalar python 3.5.2
 
 1. Instalar git
 >sudo apt-get install git
@@ -26,7 +28,8 @@ se explicará las acciones que debe hacer el usuario y su respectivo codigo para
 >virtualenv -p python3 "nombre carpeta a crear"
 
 4. Clonar el archivo desde git dentro de la carpeta del ambiente virtual
->git clone git@github.com:GonzAndre/Proyecto_final.git
+>git clone [GitHub](git@github.com:GonzAndre/Proyecto_final.git)
+
 
 5. Activar ambiente virtual (esto se realiza donde se encuentra la carpeta bin)
 >source bin/activate
