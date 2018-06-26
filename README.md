@@ -28,7 +28,7 @@ se explicará las acciones que debe hacer el usuario y su respectivo codigo para
 >virtualenv -p python3 "nombre carpeta a crear"
 
 4. Clonar el archivo desde git dentro de la carpeta del ambiente virtual
->git clone [GitHub](git@github.com:GonzAndre/Proyecto_final.git)
+>git clone git@github.com:GonzAndre/Proyecto_final.git
 
 
 5. Activar ambiente virtual (esto se realiza donde se encuentra la carpeta bin)
