@@ -36,8 +36,8 @@ se explicará las acciones que debe hacer el usuario y su respectivo codigo para
 
 si, todo funciona correctamente debería mostrar el nombre del ambiente virtual al lado derecho entro parentesis:
 
-  **Ejemplo :
-   (safecar) matias@matias-Lenovo-G40-30 ~/Escritorio/Safecar/safecar**
+![ambiente virtual](https://user-images.githubusercontent.com/26631971/41884519-d0006636-78c1-11e8-84b6-c98318c43697.png)
+
 
 6. Instalar el archivo requirements
 >sudo pip install requirements.txt
