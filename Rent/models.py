@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Car(models.Model):
+    brand = models.CharField(max_length=120)
     model = models.CharField(max_length=120)
     color = models.CharField(max_length=120)
     picture = models.ImageField(upload_to='car')
@@ -51,6 +52,7 @@ class Rent(models.Model):
     executive = models.ForeignKey(Executive, on_delete=models.CASCADE)
     start_date = models.DateField()
     end_date = models.DateField()
+    status = models.CharField(max_length=60, choices=(('E','Entregado'),('C','Cancelado'),('A','Arrendado')),default = 'A')
 
     def _str_(self):
         return '%s - %s - %s' % (self.client.name, self.car.patent, self.executive.name)

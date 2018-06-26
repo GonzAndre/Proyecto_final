@@ -1,3 +1,5 @@
+{% load bootstrap4 %}
+{% load static %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -7,20 +9,54 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Galada" rel="stylesheet">
 
-    <title>Autos</title>
+    <style>
+      h1 {
+        font-family: 'Galada', cursive;
+        font-style: normal;
+        font-weight: 400;
+        src: local('Galada'),
+        url(opensans.eot) format('embedded-opentype'),
+        url(opensans.ttf) format('truetype'),
+        url(opensans.otf) format('opentype'),
+        url(opensans.woff) format('woff');
+      }
+      .logo{
+        font-family: 'Galada', cursive;
+        font-style: normal;
+        font-weight: 400;
+        src: local('Galada'),
+        url(opensans.eot) format('embedded-opentype'),
+        url(opensans.ttf) format('truetype'),
+        url(opensans.otf) format('opentype'),
+        url(opensans.woff) format('woff');
+        border-style: solid;
+        border-radius: 6px;
+      }
+      th{
+        background-color: #404040;
+        color: #ffffff;
+      }
+    </style>
+    <title>SafeCar</title>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">SafeCar</a>
+    <logo class="navbar-brand logo">SafeCar</logo>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="navbar-collapse collapse show" id="navbarColor01" style="">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="index">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link active" href="index">Home <span class="sr-only">(current)</span></a>
             </li>
+            {% if inicio == 1 %}
+            <li class="nav-item">
+              <a class="nav-link" href="lista_arriendos">Arriendos</a>
+            </li>
+            {% endif %}
             {% if inicio == 2 %}
             <li class="nav-item">
               <a class="nav-link" href="lista_autos">Autos</a>
@@ -28,61 +64,66 @@
             <li class="nav-item">
               <a class="nav-link" href="lista_clientes">Clientes</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="lista_arriendos">Arriendos</a>
+            </li>
             {% endif %}
-            
+            {% if inicio == 3 %}
+            <li class="nav-item">
+              <a class="nav-link" href="lista_autos">Autos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="lista_arriendos">Arriendos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="lista_clientes">Clientes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="lista_ejecutivos">Ejecutivos</a>
+            </li>
+            {% endif %}
           </ul>
-    </div>
-
-    <div class="navbar-collapse collapse show" id="navbarColor01" style="">
-      <ul class="navbar-nav mr-auto">
-      </ul>
-      <form class="form-inline">
-        <a class="nav-link" href="#">{{request.user}}</a>
-        {% if inicio == 0 %}
-        <button class="btn btn-outline-info my-2 my-sm-0" type="submit"> <a class="nav-link" href="{% url 'auth_login' %}">Iniciar sesión</a> </button>
-        {% endif %}
-        {% if inicio == 2  %}
-        <button class="btn btn-outline-info my-2 my-sm-0" type="submit"> <a class="nav-link" href="{% url 'auth_logout' %}">Cerrar sesión</a> </button>
-        {% endif %}
-        {% if inicio == 1  %}
-        <button class="btn btn-outline-info my-2 my-sm-0" type="submit"> <a class="nav-link" href="{% url 'auth_logout' %}">Cerrar sesión</a> </button>
-        {% endif %}             
+          <ul class="navbar-nav mr-auto">
+    </ul>
+    <form class="form-inline">
+      <a class="nav-link" href="#">{{request.user}}</a>
+      {% if inicio == 0 %}
+      <button class="btn btn-outline-info my-2 my-sm-0" type="submit"> <a class="nav-link" href="{% url 'auth_login' %}">Iniciar sesión</a> </button>
+      {% endif %}
+      {% if inicio == 2  %}
+      <button class="btn btn-outline-info my-2 my-sm-0" type="submit"> <a class="nav-link" href="{% url 'auth_logout' %}">Cerrar sesión</a> </button>
+      {% endif %}
+      {% if inicio == 1  %}
+      <button class="btn btn-outline-info my-2 my-sm-0" type="submit"> <a class="nav-link" href="{% url 'auth_logout' %}">Cerrar sesión</a> </button>
+      {% endif %}
+      {% if inicio == 3  %}
+      <button class="btn btn-outline-info my-2 my-sm-0" type="submit"> <a class="nav-link" href="{% url 'auth_logout' %}">Cerrar sesión</a> </button>
+      {% endif %}                 
       </form>
     </div>
   </nav>
    
     <div class="container">
-        
-        
-        <div class="row">
-           <div class="col-sm-12">
-             <h1>Autos</h1>
-             <table class="table table-hover">
-                  <thead class="thead-dark">
-                    <tr>
-                      <th scope="col">Imagen</th>
-                      <th scope="col">Modelo</th>
-                      <th scope="col">Color</th>
-                      <th scope="col">Restriccion</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                      {% for Cars in object_list %}
-                    <tr>
-                      <td> {{Cars.picture}}</td>
-                      <td> {{Cars.model}}</td>
-                      <td> {{Cars.color}}</td>
-                      <td> {{Cars.restriction}}</td>
-                    </tr>
-                    {% endfor %}                  
-                  </tbody>
-                </table>
+       <h1>Autos</h1>
+       <div class="row">
+               {% for Cars in object_list %}
+               <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
+               <div class="card text-center border-primary mb-3" style="width: 18rem;">
+                  <img class="card-img-top" alt="{{Cars.picture}}" style="height: 180px; width: 100%; display: block;" src="{% get_static_prefix %}{{Cars.picture}}" data-holder-rendered="true">
+                  <div class="card-body">
+                    <h5 class="card-header text-white bg-dark mb-3">{{Cars.brand}}</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Modelo: {{Cars.model}}</li>
+                        <li class="list-group-item">Color: {{Cars.color}}</li>
+                        <li class="list-group-item"><a class="algo btn btn-primary" href="{% url 'rent_add' Cars.pk %}">Arrendar</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <br> 
             </div>
+            {% endfor %}
         </div>
-        
-        
-
-        
+       
         
         <div class="row">
             {% if object_list.has_next or object_list.has_previous %}
@@ -111,5 +152,24 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <script type = "text/javascript">
+        $(document).ready(function(){
+            {% if inicio == 1  %}
+              $('.algo').click(function(){
+                alert("Contactarse con un ejecutivo");
+              });
+            {% endif %};
+            {% if inicio == 0  %}
+              $('.algo').click(function(){
+                alert("Necesitas tener un usuario creado en SafeCar");
+              });
+            {% endif %};
+            {% if inicio == 3  %}
+              $('.algo').click(function(){
+                alert("Solo un ejecutivo puede efectuarlo");
+              });
+            {% endif %};
+        });
+    </script>
   </body>
 </html>
