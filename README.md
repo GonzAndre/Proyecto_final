@@ -47,15 +47,8 @@ para desplegar el proyecto (ubicarse en carpeta donde se encuentre el archivo ma
 
 si todo funciona de forma correcta, deberia tener una salida similar a lo siguente:
 
->System check identified no issues (0 silenced).
+![runserver](https://user-images.githubusercontent.com/26631971/41884549-ef097d42-78c1-11e8-83e0-a09efe76aca2.png)
 
->June 26, 2018 - 00:40:56
-
->Django version 2.0.4, using settings 'Proyecto_final.settings'
-
->Starting development server at http://127.0.0.1:8000/
-
->Quit the server with CONTROL-C.
 
 7. Copiar la URL que indica al ejecutar el codigo anterior y agregarle Rent/index:
 
